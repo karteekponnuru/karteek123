@@ -1,0 +1,318 @@
+<!doctype html>
+<html>
+<head>
+<title>Buzzable</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+<meta http-equiv="X-UA-Compatible" content="IE=9;IE=10;IE=Edge,chrome=1" />
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/bootstrap.css">
+<link rel="stylesheet" href="assets/css/font-awesome.min.css">
+<link rel="stylesheet" href="assets/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="assets/css/anim.css">
+<link rel="stylesheet" href="assets/css/site.css">
+<link rel="stylesheet" href="assets/css/responsive.css">
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/bootstrap.bundle.js"></script>
+<script src="assets/js/wow.min.js"></script>
+<script src="assets/js/jquery.dataTables.min.js"></script>
+<script src="assets/js/loader.js"></script>
+<script src="assets/js/common.js"></script>
+</head>
+<body>
+<div class="dashboard-page">
+  <div class="dashboard-nav">
+    <div class="d-logo"><a href="/dashboard"><img src="assets/images/logo.png" alt="" class="img-fluid desktop-logo"><img src="assets/images/login-logo.png" alt="" class="img-fluid mobile-logo"></a></div>
+    <div class="m-header">
+    	<div class="user"> <a href="javascript:void(0);"><img src="assets/images/dashboard/user.png" alt=""> Hi, <span class="uname">Vishwas Setia <img src="assets/images/dropdown-arrow.png" alt=""></span></a>
+            <div class="dropuser"><a href="/login">Logout</a></div>
+        </div>
+        <a class="m-menu" href="javascript:void(0);"><img src="assets/images/humberger.png" alt=""></a>
+    </div>
+    <ul class="dashnav">
+      <li><a class="active" href="/dashboard"><img src="assets/images/dashboard/dash.png" alt="">Dashboard</a></li>
+      <li><a class="" href="/sentiment"><img src="assets/images/dashboard/sentiment.png" alt="">Sentiment</a></li>
+      <li><a class="" href="dashboard.html"><img src="assets/images/dashboard/influential.png" alt="">Influential</a></li>
+      <li><a class="" href="dashboard.html"><img src="assets/images/dashboard/buzz.png" alt="">Buzz Words</a></li>
+      <li><a class="" href="dashboard.html"><img src="assets/images/dashboard/share-post.png" alt="">Share of Posts</a></li>
+      <li><a class="" href="dashboard.html"><img src="assets/images/dashboard/sources.png" alt="">Top Sources</a></li>
+      <li><a class="" href="dashboard.html"><img src="assets/images/dashboard/sites.png" alt="">Top Sites</a></li>
+      <li><a class="" href="dashboard.html"><img src="assets/images/dashboard/over-time.png" alt="">Sentiment over time</a></li>
+    </ul>
+  </div>
+  <div class="dashboard">
+    <div class="search-section">
+      <div class="container-fluid deshheader">
+      <div class="row">
+        <div class="col-xl-8 col-lg-12">
+        <a class="btnback" href="/back">Back</a>
+        </div>
+        <div class="col-xl-4 col-lg-0 mhide text-right">
+        <div class="user"> <a href="javascript:void(0);"><img src="assets/images/dashboard/user.png" alt=""> Hi, <span class="uname">Vishwas Setia <img src="assets/images/dropdown-arrow.png" alt=""></span></a>
+            <div class="dropuser"><a href="javascript:void(0);">Logout</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="dash-heading">
+          <h2>Your search for <span><%= feedback[8] %></span></h2>
+    </div>
+    <div class="content-area">
+    	<!--<h2>Lorem Ipsum </h2>
+    	<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>-->
+        <div class="dash-counter">
+        	<ul>
+                <% if(typeof(feedback) != 'undefined'){%>
+                    <li><span class="number posts"><span class="countposts"><%= feedback[0] %></span></span><span class="caption">Total Tweets</span></li>					
+                    <li><span class="number reach"><span class="countreach"><%= feedback[1] %></span></span><span class="caption">Total Retweets</span></li>					
+                    <li><span class="number tweets"><span class="counttweet"><%= feedback[2] %></span></span><span class="caption">Engagement Level</span></li>				
+                    <li><span class="number tweets"><span class="countretweet"><%= feedback[3] %></span></span><span class="caption">Total Favourites</span></li>							
+                    <li><span class="number uniuser"><span class="countusers"><%= feedback[4] %></span></span><span class="caption">Favourites %</span></li>	
+                <% }else{ %>
+                    <li><span class="number posts"><span class="countposts">0</span></span><span class="caption">Total Tweets</span></li>					
+                    <li><span class="number reach"><span class="countreach">0</span></span><span class="caption">Total Retweets</span></li>					
+                    <li><span class="number tweets"><span class="counttweet">0</span></span><span class="caption">Engagement Level</span></li>				
+                    <li><span class="number tweets"><span class="countretweet">0</span></span><span class="caption">Total Favourites</span></li>							
+                    <li><span class="number uniuser"><span class="countusers">0</span></span><span class="caption">Favourites %</span></li>	
+                <% } %>               
+            </ul>
+        </div>
+    </div>
+    <div class="chart-area">
+    	<div id="chart_div"></div>    
+    </div>
+    <div class="dtablebox">
+        <table id="example" class="display nowrap cell-border" style="table-layout:fixed; width:100%">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Tweet</th>
+                    <th>User</th>
+                    <th>Retweet</th>
+                    <th>Favourite</th>
+                    <th>Location</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ul>
+                    <% for(var j=0; j<feedb.length; j++) { %>
+                        <td style="width:20px;"><%= feedb[j][0] %></td>
+                        <td style="overflow:hidden; width:100px;"><%= feedb[j][1] %></td>
+                        <td style="overflow:hidden; width:100px;"><%= feedb[j][3] %></td>
+                        <td><%= feedb[j][2] %></td>
+                        <td><%= feedb[j][4] %></td>
+                        <td style="overflow:hidden; width:100px;"><%= feedb[j][5] %></td>
+                        <tr></tr>
+                    <% } %>                        
+                </ul>
+            </tbody>
+    </table>
+    </div>
+    <div class="dash-footer">
+    	<div class="row">
+        	<div class="col-xl-2 col-lg-2 col-md-2">
+                <h3>Quick Access <img src="assets/images/down-arrow.png" alt=""></h3>
+                <ul>
+                    <li>Pricing</li>
+                    <li>Features</li>
+                    <li>About us</li>                
+                </ul>
+            </div>
+        	<div class="col-xl-2 col-lg-2 col-md-2">
+                <h3>Help at Hand <img src="assets/images/down-arrow.png" alt=""></h3>
+                <ul>
+                    <li>Contact us</li>
+                    <li>Careers</li>
+                    <li>Blog</li>                
+                </ul>
+            </div>
+        	<div class="col-xl-2 col-lg-2 col-md-2">
+                <h3>Help at Hand <img src="assets/images/down-arrow.png" alt=""></h3>
+                <ul>
+                    <li>Privacy Policy</li>
+                    <li>Terms and conditions</li>
+                    <li>Blog</li>                
+                </ul>
+            </div>
+        	<div class="col-xl-4 col-lg-4 col-md-4">
+                <h3>Connect <img src="assets/images/down-arrow.png" alt=""></h3>
+                <ul class="social">
+                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                    <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                </ul>
+                <p class="dash-copyright"><script> var d = new Date(); var dy = d.getFullYear(); document.write(dy);</script> Social Analysis. All Rights Reserved.</p>
+            </div>
+            <div class="col-xl-2 col-lg-2 col-md-2 textrnl">
+                <!--<p class="bktop"><a href="Javascript:void(0);" class="backtotop">Back to top <img src="assets/images/back-to-top.png" alt=""></a></p>-->
+                <a href="Javascript:void(0);" class="chaticon"><img src="assets/images/chat.png" alt=""></a>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+</div>
+<script>
+    var data1 =  <%- JSON.stringify(feedb1) %>;
+</script>
+
+<script>
+$(document).ready(function(e) {
+	
+	$({ Counter1: 0 }).animate({
+  Counter1: $('.countposts').text()
+}, {
+  duration: 2000,
+  easing: 'swing',
+  step: function() {
+    $('.countposts').text(Math.ceil(this.Counter1));
+  }
+});
+	$({ Counter2: 0 }).animate({
+  Counter2: $('.countreach').text()
+}, {
+  duration: 2000,
+  easing: 'swing',
+  step: function() {
+    $('.countreach').text(Math.ceil(this.Counter2));
+  }
+});
+	$({ Counter3: 0 }).animate({
+  Counter3: $('.countusers').text()
+}, {
+  duration: 2000,
+  easing: 'swing',
+  step: function() {
+    $('.countusers').text(Math.ceil(this.Counter3));
+  }
+});
+	
+            var ctweet = $('.counttweet').text();
+            //$(this).css('-webkit-transform', 'rotate(' + now + 'deg)');
+            $('.counttweet').prop('Counter', 0).animate({
+                Counter: ctweet
+            }, {
+                duration: 2000,
+                easing: 'linear',
+                step: function(ctweet) {
+                    $('.counttweet').text(Math.round(ctweet * 100) / 100);
+                }
+            });
+            var cretweet = $('.countretweet').text();
+            //$(this).css('-webkit-transform', 'rotate(' + now + 'deg)');
+            $('.countretweet').prop('Counter', 0).animate({
+                Counter: cretweet
+            }, {
+                duration: 2000,
+                easing: 'linear',
+                step: function(cretweet) {
+                    $('.countretweet').text(Math.round(cretweet * 100) / 100);
+                }
+            });
+    $('#example').DataTable( {
+        "scrollX": true, 
+		"info": false,
+		"searching": false,
+		"bLengthChange": false,
+		"ordering": false,
+        "bFilter": false
+    });
+});
+</script>
+<script type="text/javascript">
+     google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+
+      var data = new google.visualization.DataTable();
+      data.addColumn('date', 'Day');
+      data.addColumn('number', 'Tweets');
+      data.addColumn('number', 'Retweets');
+      data.addColumn('number', 'Favourites');
+        
+      for(var i =0;i<data1.length;i++){
+      data.addRow(
+          [new Date( data1[i][1], (data1[i][2] -1), data1[i][3] ), data1[i][4] , data1[i][5], data1[i][7]]
+      );
+}
+
+var options = {
+          title: '',
+          hAxis: {
+			  title:'Dates',
+            format: 'M/dd/yy',
+            gridlines: {count: 30}
+          },
+          vAxis: {
+			  title:'Numbers',
+            gridlines: {color: 'none'},
+            minValue: 0
+          },
+		    legend: {position: 'top'},
+			series: {
+            0: { color: '#9085da' },
+            1: { color: '#4fadff' },
+            2: { color: '#ff6382' },
+          },
+		  chartArea: {
+		width: '80%'
+		, height: '500px'
+	}
+        };
+        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+        
+
+         var columns = [];
+    var series = {};
+    for (var i = 0; i < data.getNumberOfColumns(); i++) {
+        columns.push(i);
+        if (i > 0) {
+            series[i - 1] = {};
+        }
+    }
+    
+    var options = {
+        width: 600,
+        height: 400,
+        series: series
+    }
+    
+    google.visualization.events.addListener(chart, 'select', function () {
+        var sel = chart.getSelection();
+        // if selection length is 0, we deselected an element
+        if (sel.length > 0) {
+            // if row is undefined, we clicked on the legend
+            if (typeof sel[0].row === 'undefined') {
+                var col = sel[0].column;
+                if (columns[col] == col) {
+                    // hide the data series
+                    columns[col] = {
+                        label: data.getColumnLabel(col),
+                        type: data.getColumnType(col),
+                        calc: function () {
+                            return null;
+                        }
+                    };
+                    
+                    // grey out the legend entry
+                    series[col - 1].color = '#CCCCCC';
+                }
+                else {
+                    // show the data series
+                    columns[col] = col;
+                    series[col - 1].color = null;
+                }
+                var view = new google.visualization.DataView(data);
+                view.setColumns(columns);
+                chart.draw(view, options);
+            }
+        }
+    });
+      }
+    </script>
+
+
+</body>
+</html>

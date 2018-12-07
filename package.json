@@ -1,0 +1,29 @@
+{
+  "name": "node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "Sentimental": "^1.0.1",
+    "aylien_textapi": "^0.7.0",
+    "body-parser": "^1.18.3",
+    "cookie-parser": "^1.4.3",
+    "cookies": "^0.7.3",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "fetch-tweets": "^0.1.7",
+    "fs": "0.0.1-security",
+    "path": "^0.12.7",
+    "r-script": "0.0.3",
+    "request": "^2.88.0",
+    "stanford-ner": "^1.0.0",
+    "twit": "^2.2.11",
+    "twitter": "^1.7.1"
+  }
+}
